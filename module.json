@@ -1,0 +1,30 @@
+{
+  "id": "tf-acks-ii-wilderness-expeditions",
+  "title": "TF ACKS II Wilderness Expeditions",
+  "version": "0.0.1",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "miketwoface",
+      "email": "miketwoface@gmail.com",
+      "discord": "miketwoface",
+      "flags": {}
+    }
+  ],
+  "flags": {
+    "canUpload": true
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "acks",
+        "type": "system",
+        "compatibility": {}
+      }
+    ]
+  },
+  "description": ""
+}
