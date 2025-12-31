@@ -1,0 +1,30 @@
+{
+  "name": "tf-acks-ii-wilderness-expeditions",
+  "version": "0.0.1",
+  "description": "TF ACKS II Wilderness Expeditions Helper",
+  "private": true,
+  "main": "src/main.mjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thetwoface/tf-acks-ii-wilderness-expeditions.git"
+  },
+  "keywords": [
+    "ACKS II",
+    "ACKS"
+  ],
+  "author": "miketwoface",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thetwoface/tf-acks-ii-wilderness-expeditions/issues"
+  },
+  "homepage": "https://github.com/thetwoface/tf-acks-ii-wilderness-expeditions#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "@stylistic/eslint-plugin": "^5.6.1",
+    "eslint": "^9.39.2",
+    "globals": "^16.5.0"
+  }
+}
