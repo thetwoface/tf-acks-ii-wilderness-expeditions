@@ -1,5 +1,35 @@
 {
   "TFWE": {
-    "AppName": "Wilderness Expeditions"
+    "AppName": "Wilderness Expeditions",
+    "Territory": {
+      "CR": "Civilized + Road",
+      "C": "Civilized",
+      "BR": "Borderlands + Road",
+      "B": "Borderlands",
+      "OR": "Outlands + Road",
+      "O": "Outlands",
+      "UR": "Unsettled + Road",
+      "U": "Unsettled"
+    },
+    "Terrain": {
+      "B": "Barrens (Rocky, Sandy)",
+      "D": "Desert (Any)",
+      "R": "River",
+      "RD": "River (Desert)",
+      "RJ": "River (Jungle)",
+      "G": "Grassland (Farm, Prairie, Steppe)",
+      "GS": "Grassland (Savanna)",
+      "SS": "Scrubland (Sparse)",
+      "SD": "Scrubland (Dense)",
+      "FD": "Forest (Deciduous)",
+      "FT": "Forest (Taiga)",
+      "H": "Hills (Any)",
+      "M": "Mountains (Any)",
+      "J": "Jungle (Any)",
+      "S": "Swamp (Any)"
+    },
+    "Error": {
+      "UnknownEncounterType": "Unknown encounter type:"
+    }
   }
 }

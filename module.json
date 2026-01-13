@@ -18,7 +18,7 @@
     "canUpload": true
   },
   "esmodules": [
-    "src/main.mjs"
+    "src/module.mjs"
   ],
   "styles": [
     "styles/tf-acks-ii-wilderness-expeditions.css"

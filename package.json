@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "TF ACKS II Wilderness Expeditions Helper",
   "private": true,
-  "main": "src/main.mjs",
+  "main": "src/module.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

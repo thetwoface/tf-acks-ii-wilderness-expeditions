@@ -1,3 +1,11 @@
+import {
+    CIVILIZED_ENCOUNTERS_LUT,
+    ENCOUNTER_BY_TERRITORY_LUT,
+    ENCOUNTER_KIND,
+    TERRAIN_OPTIONS,
+    TERRITORY_OPTIONS,
+} from '../constants.mjs';
+
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 export default class WildernessExpeditions extends HandlebarsApplicationMixin(ApplicationV2) {
@@ -8,34 +16,77 @@ export default class WildernessExpeditions extends HandlebarsApplicationMixin(Ap
             minimizable: true,
             resizable: true,
             title: 'TFWE.AppName',
+            contentClasses: ['standard-form'],
         },
         position: {
-            width: 400,
-            height: 600,
+            width: 550,
+            height: 450,
         },
         classes: ['tfwe'],
-        actions: {},
+        actions: {
+            generateEncounter: WildernessExpeditions.#generateEncounter,
+        },
     };
 
     static PARTS = {
         main: {
             template: 'modules/tf-acks-ii-wilderness-expeditions/templates/wilderness-expeditions.hbs',
+            classes: ['standard-form'],
         },
     };
+
+    /**
+     *
+     * @param {PointerEvent} event
+     * @param {HTMLElement} target
+     */
+    static async #generateEncounter(event, target) {
+        /** @type {HTMLFieldSetElement} */
+        const fieldset = target.closest('fieldset[name="wildernessEncounters"]');
+        /** @type {HTMLSelectElement} */
+        const territorySelect = fieldset.elements['territorySelect'];
+        /** @type {HTMLSelectElement} */
+        const terrainSelect = fieldset.elements['terrainSelect'];
+
+        const territory = territorySelect.value;
+        const terrain = terrainSelect.value;
+        const tableData = ENCOUNTER_BY_TERRITORY_LUT[territory];
+        const table = await foundry.utils.fromUuid(tableData.uuid);
+        const result = await table.draw({
+            displayChat: true,
+            recursive: true,
+            rollMode: 'gmroll',
+        });
+
+        /** @type {string} */
+        const encounterKind = result.results[0]?.name ?? 'Unknown Encounter Type';
+        switch (encounterKind) {
+            case ENCOUNTER_KIND.CIVILIZED: {
+                const encounterTableData = CIVILIZED_ENCOUNTERS_LUT[terrain];
+                const encounterTable = await foundry.utils.fromUuid(encounterTableData.uuid);
+                await encounterTable.draw({
+                    displayChat: true,
+                    recursive: true,
+                    rollMode: 'gmroll',
+                });
+                break;
+            }
+            case ENCOUNTER_KIND.NONE:
+                // do nothing
+                break;
+            case 'Unknown Encounter Type':
+            default:
+                foundry.ui.notifications.error(`${game.i18n.localize('TFWE.Error.UnknownEncounterType')} ${encounterKind}`);
+                break;
+        }
+    }
 
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
 
-        const territoryClassification = {
-            cr: 'Civilized + Road',
-            cbr: 'Civilized or Borderlands + Road',
-            bor: 'Borderlands or Outlands + Road',
-            our: 'Outlands or Unsettled + Road',
-            u: 'Unsettled',
-        };
-
         return Object.assign(context, {
-            territoryClassification,
+            territoryOptions: TERRITORY_OPTIONS,
+            terrainOptions: TERRAIN_OPTIONS,
         });
     }
 }
