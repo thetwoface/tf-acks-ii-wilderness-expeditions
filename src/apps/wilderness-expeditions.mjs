@@ -2,6 +2,8 @@ import {
     CIVILIZED_ENCOUNTERS_LUT,
     ENCOUNTER_BY_TERRITORY_LUT,
     ENCOUNTER_KIND,
+    MONSTER_ENCOUNTER_BY_TERRAIN_AND_RARITY_LUT,
+    MONSTER_RARITY_BY_TERRITORY_LUT,
     TERRAIN_OPTIONS,
     TERRITORY_OPTIONS,
 } from '../constants.mjs';
@@ -20,7 +22,7 @@ export default class WildernessExpeditions extends HandlebarsApplicationMixin(Ap
         },
         position: {
             width: 550,
-            height: 450,
+            height: 305,
         },
         classes: ['tfwe'],
         actions: {
@@ -60,11 +62,31 @@ export default class WildernessExpeditions extends HandlebarsApplicationMixin(Ap
 
         /** @type {string} */
         const encounterKind = result.results[0]?.name ?? 'Unknown Encounter Type';
+
         switch (encounterKind) {
             case ENCOUNTER_KIND.CIVILIZED: {
                 const encounterTableData = CIVILIZED_ENCOUNTERS_LUT[terrain];
                 const encounterTable = await foundry.utils.fromUuid(encounterTableData.uuid);
                 await encounterTable.draw({
+                    displayChat: true,
+                    recursive: true,
+                    rollMode: 'gmroll',
+                });
+                break;
+            }
+            case ENCOUNTER_KIND.MONSTER: {
+                const monsterRarityTableData = MONSTER_RARITY_BY_TERRITORY_LUT[territory];
+                const monsterRarityTable = await foundry.utils.fromUuid(monsterRarityTableData.uuid);
+                const monsterRarityResult = await monsterRarityTable.draw({
+                    displayChat: true,
+                    recursive: true,
+                    rollMode: 'gmroll',
+                });
+                /** @type {string} */
+                const monsterRarity = monsterRarityResult.results[0]?.name;
+                const monsterTableData = MONSTER_ENCOUNTER_BY_TERRAIN_AND_RARITY_LUT[terrain][monsterRarity];
+                const monsterTable = await foundry.utils.fromUuid(monsterTableData.uuid);
+                await monsterTable.draw({
                     displayChat: true,
                     recursive: true,
                     rollMode: 'gmroll',
